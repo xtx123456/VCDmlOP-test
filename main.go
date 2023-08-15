@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/alinush/go-mcl"
-	"github.com/hyperproofs/hyperproofs-go/vcs"
+	"vcs"
 )
 
 func main() {
