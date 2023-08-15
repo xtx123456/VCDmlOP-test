@@ -14,8 +14,7 @@ import (
 func main() {
 	testing.Init()
 	flag.Parse()
-
-	fmt.Println("Hello, World!")
+	
 	mcl.InitFromString("bls12-381")
 
 	dt := time.Now()
