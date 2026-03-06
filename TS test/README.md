@@ -28,7 +28,7 @@ python -m scripts.train \
   --epochs 200 --batch-size 128 --lr 0.01 --verbose
 ```
 
-> 说明：训练脚本会把 `arch` 与 `dataset` 写入 `metadata.json`，供 verify/攻击自动识别；`epoch_0000.pt` 为 **PoT 初始化**快照。
+
 
 ### 2) 插值攻击（无数据）
 支持直接传**链目录**（推荐），从中读取最终 checkpoint 与元数据：
@@ -40,7 +40,7 @@ python -m scripts.attack_interp \
   --alpha-start 0.0 --alpha-end 1.0 --alpha-step 0.02 \
   --verbose
 ```
-> `--arch auto`：从受害者链的 `metadata.json['arch']` 自动选择（AlexNet/ResNet）。插值仅对**同形状浮点参数**进行，不匹配的键直接采用 final。
+
 
 ### 3) 规则蒸馏攻击（同分布 AUX 切分）
 ```bash
@@ -54,12 +54,6 @@ python -m scripts.attack_distill \
   --labeled-frac 0.10 --lambda-ce 1.0 \
   --verbose
 ```
-- 该脚本会：
-  1. 从 victim 链载入 **teacher**（最终权重）；
-  2. 构建同架构 **student** 并进行 **PoT 初始化**；
-  3. **保存 `epoch_0000.pt`**（真实 PoT init，用于 P3/P4/P6 基线）；
-  4. **重新初始化 student** 后开始蒸馏训练（避免“训练起点=已保存的 init”）；
-  5. 每个 epoch 保存 `epoch_XXXX.pt` 并更新元信息。
 
 ### 4) 验证一条链（P1–P6，严格判定可选）
 ```bash
