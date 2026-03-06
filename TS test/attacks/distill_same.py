@@ -200,11 +200,6 @@ def main():
     with open(os.path.join(args.out, 'metadata.json'), 'w') as f:
         json.dump(meta, f, indent=2, allow_nan=False)
 
-    # 7) Re-init student so training doesn't reuse saved init
-    student = ModelCls(num_classes=num_classes).to(device)
-    student.apply(apply_pot_init)
-    optimzr = torch.optim.SGD(student.parameters(), lr=args.lr, momentum=0.9, weight_decay=args.weight_decay)
-    sched   = torch.optim.lr_scheduler.CosineAnnealingLR(optimzr, T_max=args.epochs)
 
     # 8) KD training
     for epoch in range(1, args.epochs + 1):
